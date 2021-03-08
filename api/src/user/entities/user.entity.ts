@@ -1,4 +1,5 @@
 import Person from '../../person/person';
+import Permission from '../../permissions/permissions';
 import { v4 as uuid } from 'uuid';
 export class User extends Person {
   private id: string;
@@ -7,16 +8,50 @@ export class User extends Person {
   private position: string;
   private isSuperUser: boolean;
   private parentUser: User;
-  private permissions: string; //change to Permission type
+  private permissions: Permission;
   private blocked: boolean;
   private created: number;
   private deletedAt: number;
   private deleted: boolean;
 
-  constructor() {
+  constructor(
+    name,
+    cpf,
+    address,
+    email,
+    phone,
+    birthday,
+    username,
+    propertyCNPJ,
+    position,
+    isSuperUser,
+    parentUser,
+    permissions,
+    blocked,
+  ) {
     super();
+    this.setUsername(username);
+    this.setPropertyCNPJ(propertyCNPJ);
+    this.setPosition(position);
+    this.setIsSuperUser(isSuperUser);
+    this.setParentUser(parentUser);
+    this.setPermissions(permissions);
+    this.setBlocked(blocked);
+    this.setName(name);
+    this.setCpf(cpf);
+    this.setAddress(address);
+    this.setEmail(email);
+    this.setPhone(phone);
+    this.setBirthday(birthday);
+    this.setCreated()
   }
 
+  private getId(): string {
+    return this.id;
+  }
+  private setId(id: string): void {
+    this.id = id;
+  }
   private getUsername(): string {
     return this.username;
   }
@@ -55,11 +90,11 @@ export class User extends Person {
     this.parentUser = parentUser;
   }
 
-  private getPermissions(): string {
+  private getPermissions(): Permission {
     return this.permissions;
   }
 
-  private setPermissions(permissions: string): void {
+  private setPermissions(permissions: Permission): void {
     this.permissions = permissions;
   }
 
@@ -72,19 +107,27 @@ export class User extends Person {
     this.created = Date.now();
   }
 
-  private getDeleted(): boolean{
-      return this.deleted
+  private getDeleted(): boolean {
+    return this.deleted;
   }
 
-  private setDeleted(deleted: boolean): void{
-      this.deleted = deleted;
+  private setDeleted(deleted: boolean): void {
+    this.deleted = deleted;
   }
 
-  private getDeletedAt(): number{
-      return this.deletedAt;
+  private getDeletedAt(): number {
+    return this.deletedAt;
   }
 
-  private setDeletedAt(): void{
+  private setDeletedAt(): void {
     this.deletedAt = Date.now();
+  }
+
+  private getBlocked(): boolean {
+    return this.blocked;
+  }
+
+  private setBlocked(blocked: boolean): void {
+    this.blocked = blocked;
   }
 }

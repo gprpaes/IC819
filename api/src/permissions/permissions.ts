@@ -1,4 +1,4 @@
-export class Permission {
+export default class Permission {
   private id: number;
   private name: string;
   private descripition: string;
@@ -9,10 +9,32 @@ export class Permission {
   private canViewGuest: boolean;
   private canEditGuest: boolean;
 
+  constructor(
+    name,
+    description,
+    canViewFinancial,
+    canEditFinancial,
+    canViewReport,
+    canEditReport,
+    canViewGuest,
+    canEditGuest,
+  ) {
+    this.setName(name);
+    this.setDescription(description);
+    this.setCanViewFinancial(canViewFinancial);
+    this.setCanEditFinancial(canEditFinancial);
+    this.setCanViewReport(canViewReport);
+    this.setCanEditReport(canEditReport);
+    this.setCanViewGuest(canViewGuest);
+    this.setCanEditGuest(canEditGuest);
+  }
+
   private getId(): number {
     return this.id;
   }
-
+  private setId(id: number): void {
+    this.id = id;
+  }
   private getName(): string {
     return this.name;
   }
