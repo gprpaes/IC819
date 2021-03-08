@@ -1,9 +1,10 @@
 import { v4 as uuid } from 'uuid';
+import PropertyType from '../../propertyType/propertyType'
 export class Property {
   private id: string;
   private name: string;
   private cnpj: string;
-  private propertyType: string;
+  private propertyType: PropertyType;
   private address: string;
   private roomAmount: number;
 
@@ -39,11 +40,11 @@ export class Property {
     this.cnpj = cnpj;
   }
 
-  private getPropertyType(): string {
+  private getPropertyType(): PropertyType {
     return this.propertyType;
   }
 
-  private setPropertyType(propertyType: string): void {
+  private setPropertyType(propertyType: PropertyType): void {
     this.propertyType = propertyType;
   }
 
