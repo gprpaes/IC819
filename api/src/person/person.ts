@@ -47,6 +47,14 @@ abstract class Person {
   protected setBirthday(birthday: Date) {
     this.birthday = birthday;
   }
+
+  protected getAddress(): string{
+      return this.address;
+  }
+
+  protected setAddress(address: string): void{
+      this.address = address;
+  }
 }
 
 export default Person;
