@@ -1,9 +1,9 @@
 import { v4 as uuid } from 'uuid';
 import PropertyType from '../../propertyType/propertyType'
-export class Property {
+export default class Property {
   private id: string;
   private name: string;
-  private cnpj: string;
+  public cnpj: string;
   private propertyType: PropertyType;
   private address: string;
   private roomAmount: number;

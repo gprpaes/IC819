@@ -11,6 +11,7 @@ require('dotenv').config()
     type: 'postgres',
     url: process.env.DB_CONNECT,
     synchronize: true,
+    autoLoadEntities: true,
     ssl: {
       rejectUnauthorized: false,
       require: true,
