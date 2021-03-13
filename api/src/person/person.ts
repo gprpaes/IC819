@@ -1,4 +1,5 @@
-import {Column} from 'typeorm'
+import {Column, Unique} from 'typeorm'
+@Unique(['cpf', 'email'])
 abstract class Person {
   @Column()
   protected name: string;
