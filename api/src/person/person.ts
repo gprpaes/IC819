@@ -1,9 +1,16 @@
+import {Column} from 'typeorm'
 abstract class Person {
+  @Column()
   protected name: string;
+  @Column()
   protected cpf: string;
+  @Column()
   protected address: string;
+  @Column()
   protected email: string;
+  @Column()
   protected phone: string;
+  @Column()
   protected birthday: Date;
 
   protected getName(): string {

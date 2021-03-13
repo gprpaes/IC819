@@ -1,17 +1,55 @@
 import Person from '../../person/person';
 import Permission from '../../permissions/permissions';
+import Property from '../../property/entities/property.entity';
 import { v4 as uuid } from 'uuid';
+import {
+  PrimaryGeneratedColumn,
+  Column,
+  Entity,
+  OneToOne,
+  JoinColumn,
+  CreateDateColumn,
+  DeleteDateColumn,
+  OneToMany,
+} from 'typeorm';
+@Entity()
 export class User extends Person {
+  @PrimaryGeneratedColumn('uuid')
   private id: string;
+
+  @Column()
   private username: string;
-  private propertyCNPJ: string;
+
+  @OneToMany(
+    () => Property,
+    property => property.cnpj,
+  )
+  public propertyCNPJ: string;
+
+  @Column()
   private position: string;
+
+  @Column({ default: false })
   private isSuperUser: boolean;
+
+  @OneToOne(() => User)
+  @JoinColumn()
   private parentUser: User;
+
+  @OneToOne(() => Permission)
+  @JoinColumn()
   private permissions: Permission;
+
+  @Column()
   private blocked: boolean;
+
+  @CreateDateColumn()
   private created: number;
+
+  @DeleteDateColumn({ name: 'deleted_at' })
   private deletedAt: number;
+
+  @Column({ default: false })
   private deleted: boolean;
 
   constructor(
@@ -43,7 +81,7 @@ export class User extends Person {
     this.setEmail(email);
     this.setPhone(phone);
     this.setBirthday(birthday);
-    this.setCreated()
+    this.setCreated();
   }
 
   private getId(): string {
