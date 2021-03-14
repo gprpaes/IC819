@@ -1,12 +1,33 @@
-import { v4 as uuid } from 'uuid';
+
 import PropertyType from '../../propertyType/propertyType'
+import {PrimaryGeneratedColumn, Column, DeleteDateColumn, ManyToOne, Entity} from 'typeorm'
+import User from '../../user/entities/user.entity';
+
+@Entity()
 export default class Property {
+  @PrimaryGeneratedColumn("uuid")
   private id: string;
+
+  @Column()
   private name: string;
+
+  @ManyToOne(() => User, user => user.propertyCNPJ)
   public cnpj: string;
-  private propertyType: PropertyType;
+
+  @ManyToOne(() => PropertyType, propertyType => propertyType.properties)
+  public propertyType: PropertyType;
+  
+  @Column()
   private address: string;
+
+  @Column({name: 'room_amount'})
   private roomAmount: number;
+
+  @Column({default: false})
+  private deleted: boolean;
+
+  @DeleteDateColumn({name: 'deleted_at'})
+  private deletedAt: number;
 
   constructor(name, cnpj, propertyType, address, roomAmount) {
     this.setName(name);
@@ -16,6 +37,7 @@ export default class Property {
     this.setRoomAmount(roomAmount);
   }
 
+  
   private getId(): string {
     return this.id;
   }
@@ -62,5 +84,13 @@ export default class Property {
 
   private setRoomAmount(roomAmount: number): void {
     this.roomAmount = roomAmount;
+  }
+
+  private getDeleted(): boolean{
+    return this.deleted;
+  }
+
+  private setDeleted(deleted: boolean): void{
+      this.deleted = deleted
   }
 }

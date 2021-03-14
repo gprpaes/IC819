@@ -1,7 +1,21 @@
+import Property from '../property/entities/property.entity'
+import {PrimaryGeneratedColumn, Column, OneToMany, Entity, Unique} from 'typeorm'
+
+@Entity()
+@Unique(['name'])
 export default class PropertyType {
+
+  @PrimaryGeneratedColumn()
   private id: number;
+
+  @Column()
   private name: string;
+
+  @Column()
   private description: string;
+
+  @OneToMany(() => Property, property => property.propertyType)
+  public properties: Property[];
 
   constructor(name, description) {
     this.setName(name);

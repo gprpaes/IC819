@@ -1,7 +1,6 @@
 import Person from '../../person/person';
 import Permission from '../../permissions/permissions';
 import Property from '../../property/entities/property.entity';
-import { v4 as uuid } from 'uuid';
 import {
   PrimaryGeneratedColumn,
   Column,
@@ -10,10 +9,11 @@ import {
   JoinColumn,
   CreateDateColumn,
   DeleteDateColumn,
-  OneToMany,
+  ManyToOne,
+  OneToMany
 } from 'typeorm';
 @Entity()
-export class User extends Person {
+export default class User extends Person {
   @PrimaryGeneratedColumn('uuid')
   private id: string;
 
@@ -24,7 +24,7 @@ export class User extends Person {
     () => Property,
     property => property.cnpj,
   )
-  public propertyCNPJ: string;
+  public propertyCNPJ: Property[];
 
   @Column()
   private position: string;
@@ -36,9 +36,8 @@ export class User extends Person {
   @JoinColumn()
   private parentUser: User;
 
-  @OneToOne(() => Permission)
-  @JoinColumn()
-  private permissions: Permission;
+  @ManyToOne(() => Permission, permission => permission.users)
+  public permission: Permission;
 
   @Column()
   private blocked: boolean;
@@ -60,12 +59,12 @@ export class User extends Person {
     phone,
     birthday,
     username,
-    propertyCNPJ,
-    position,
     isSuperUser,
     parentUser,
-    permissions,
-    blocked,
+    permission?,
+    blocked?,
+    propertyCNPJ?,
+    position?,
   ) {
     super();
     this.setUsername(username);
@@ -73,7 +72,7 @@ export class User extends Person {
     this.setPosition(position);
     this.setIsSuperUser(isSuperUser);
     this.setParentUser(parentUser);
-    this.setPermissions(permissions);
+    this.setpermission(permission);
     this.setBlocked(blocked);
     this.setName(name);
     this.setCpf(cpf);
@@ -98,11 +97,11 @@ export class User extends Person {
     this.username = username;
   }
 
-  private getPropertyCNPJ(): string {
+  private getPropertyCNPJ(): Property[] {
     return this.propertyCNPJ;
   }
 
-  private setPropertyCNPJ(propertyCNPJ: string): void {
+  private setPropertyCNPJ(propertyCNPJ: Property[]): void {
     this.propertyCNPJ = propertyCNPJ;
   }
   private getPosition(): string {
@@ -128,12 +127,12 @@ export class User extends Person {
     this.parentUser = parentUser;
   }
 
-  private getPermissions(): Permission {
-    return this.permissions;
+  private getpermission(): Permission {
+    return this.permission;
   }
 
-  private setPermissions(permissions: Permission): void {
-    this.permissions = permissions;
+  private setpermission(permission: Permission): void {
+    this.permission = permission;
   }
 
   private getCreated(): Number {
@@ -165,7 +164,7 @@ export class User extends Person {
     return this.blocked;
   }
 
-  private setBlocked(blocked: boolean): void {
+  private setBlocked(blocked: boolean = false): void {
     this.blocked = blocked;
   }
 }

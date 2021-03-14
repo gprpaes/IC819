@@ -1,13 +1,38 @@
+import{Entity, PrimaryGeneratedColumn, Column, OneToMany, Unique} from 'typeorm'
+import User from '../user/entities/user.entity'
+@Entity()
+@Unique(['name'])
 export default class Permission {
+  
+  @PrimaryGeneratedColumn()
   private id: number;
+
+  @Column()
   private name: string;
+
+  @Column()
   private descripition: string;
+
+  @Column()
   private canViewFinancial: boolean;
+
+  @Column()
   private canEditFinancial: boolean;
+
+  @Column()
   private canViewReport: boolean;
+
+  @Column()
   private canEditReport: boolean;
+
+  @Column()
   private canViewGuest: boolean;
+
+  @Column()
   private canEditGuest: boolean;
+
+  @OneToMany(() => User, user => user.permission)
+  public users: User[]
 
   constructor(
     name,
